@@ -1,4 +1,4 @@
-#!/us/bin/python3
+#!/usr/bin/python3
 
 '''
 Date: Jan 16, 2016
@@ -115,18 +115,20 @@ with ProgressBar(max_value=sum(1 for line in open(args.password_file, 'r', encod
         progress_bar_counter = 0
         print(g, "Starting Password Analysis")
         for line in password_file:
+            if line.endswith("\n"):
+                line = line[:-1] #remove trailing newline.  We do this instead of strip to avoid taking off a trailing space on a password
             progress_bar_counter += 1
             bar.update(progress_bar_counter)
             if args.format == "jtr" and not ":" in line: #skip any line that doesnt contain a valid un:pass for jtr files
                 continue
             if args.format == "jtr":
                 username = line.split(":")[0]
-                password = ''.join(line.split(":")[1:]).strip()
+                password = ''.join(line.split(":")[1:])
             else:
-                password = line.strip()
+                password = line
                 username = ""
             try:
-                analyzed.append(ScoreRun(password, username))
+                if password: analyzed.append(ScoreRun(password, username))
             except OverflowError:
                 pass
 
