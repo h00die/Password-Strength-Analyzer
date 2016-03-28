@@ -1,3 +1,6 @@
+# Deprecated
+https://github.com/digininja/pipal
+
 # Password-Strength-Analyzer
 Analyze password strengths of compromised database users
 
